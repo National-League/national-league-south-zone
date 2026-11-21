@@ -99,3 +99,35 @@ create policy "Public can read news articles" on public.news_articles for select
 -- No public INSERT, UPDATE or DELETE policies are created. Data ingestion
 -- will be performed later by a trusted server-side process using a secret key
 -- stored only in server-side environment variables, never NEXT_PUBLIC_*.
+
+-- Seed the published 2026/27 club allocation. This is reference data only;
+-- crests and live football data are added after sources are verified.
+insert into public.clubs (name, short_name, slug, initials) values
+  ('AFC Totton', 'AFC Totton', 'afc-totton', 'TOT'),
+  ('Billericay Town', 'Billericay', 'billericay-town', 'BIL'),
+  ('Braintree Town', 'Braintree', 'braintree-town', 'BRA'),
+  ('Chelmsford City', 'Chelmsford', 'chelmsford-city', 'CHE'),
+  ('Chesham United', 'Chesham', 'chesham-united', 'CHU'),
+  ('Dagenham & Redbridge', 'Dagenham & Redbridge', 'dagenham-and-redbridge', 'D&R'),
+  ('Dorking Wanderers', 'Dorking', 'dorking-wanderers', 'DOR'),
+  ('Dover Athletic', 'Dover', 'dover-athletic', 'DOV'),
+  ('Ebbsfleet United', 'Ebbsfleet', 'ebbsfleet-united', 'EBB'),
+  ('Farnborough', 'Farnborough', 'farnborough', 'FAR'),
+  ('Farnham Town', 'Farnham', 'farnham-town', 'FAT'),
+  ('Folkestone Invicta', 'Folkestone', 'folkestone-invicta', 'FOI'),
+  ('Hampton & Richmond Borough', 'Hampton & Richmond', 'hampton-and-richmond-borough', 'HRB'),
+  ('Hemel Hempstead Town', 'Hemel Hempstead', 'hemel-hempstead-town', 'HHT'),
+  ('Horsham', 'Horsham', 'horsham', 'HOR'),
+  ('Maidenhead United', 'Maidenhead', 'maidenhead-united', 'MAI'),
+  ('Maidstone United', 'Maidstone', 'maidstone-united', 'MAD'),
+  ('Salisbury', 'Salisbury', 'salisbury', 'SAL'),
+  ('Slough Town', 'Slough', 'slough-town', 'SLO'),
+  ('Tonbridge Angels', 'Tonbridge', 'tonbridge-angels', 'TON'),
+  ('Torquay United', 'Torquay', 'torquay-united', 'TOR'),
+  ('Truro City', 'Truro', 'truro-city', 'TRU'),
+  ('Walton & Hersham', 'Walton & Hersham', 'walton-and-hersham', 'WAH'),
+  ('Weston-super-Mare', 'Weston-super-Mare', 'weston-super-mare', 'WSM')
+on conflict (slug) do update set
+  name = excluded.name,
+  short_name = excluded.short_name,
+  initials = excluded.initials;
