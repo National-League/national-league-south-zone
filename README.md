@@ -12,6 +12,7 @@ The first Next.js App Router foundation is in place:
 - League table page, ready for a verified data provider
 - News centre page, ready for official club feeds
 - Responsive classic football-publication styling
+- Supabase JavaScript client helper and initial database schema
 
 **Important:** live scores, standings, news feeds, club crests and supporter accounts are not connected yet. The site deliberately displays connection states rather than made-up scores, tables or articles.
 
@@ -26,6 +27,18 @@ npm run dev
 
 Open http://localhost:3000.
 
+## Supabase setup
+
+1. In Supabase, open **SQL Editor**.
+2. Open `supabase/migrations/20261121170000_initial_schema.sql` from this repository and copy its full contents.
+3. Paste it into a new SQL query and click **Run**.
+4. In Vercel → Project → Settings → Environment Variables, set:
+   - `NEXT_PUBLIC_SUPABASE_URL` = the project URL (without `/rest/v1/`)
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` = the Supabase publishable key
+5. Redeploy after environment variable changes.
+
+The publishable key is intended for browser use. Row Level Security is enabled on all tables in the supplied schema. Never expose a Supabase secret/service-role key in a `NEXT_PUBLIC_*` variable or commit it to GitHub.
+
 ## Deploy
 
 1. Import this repository into Vercel.
@@ -38,8 +51,6 @@ Open http://localhost:3000.
 - A free data provider with confirmed National League South coverage for fixtures, results, standings and match events.
 - Official club RSS/news sources where available.
 - Official club crest assets or permitted media sources.
-
-Do not put private API keys in client-side code or commit secrets to GitHub.
 
 ## Club allocation source
 
